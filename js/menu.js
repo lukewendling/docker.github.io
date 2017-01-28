@@ -1,3 +1,6 @@
+---
+layout: null
+---
 var metadata;
 var autoCompleteShowing = false;
 var displayingAutcompleteResults = new Array();
@@ -199,6 +202,26 @@ jQuery(document).ready(function(){
       metadata = data;
       hookupTOCEvents();
     });
+
+    // Grab the current section, output in treebuilder.html
+    // Then, loop through the horizontalnav sections from toc.yaml
+    // If the current section matches one in horizontalnav, it's the tab we're
+    // currently on! Highlight it! Careful: This code is Liquid/JS hybrid.
+
+    var currentSection = $("#currentSection").text();
+    console.log("currentSection",currentSection);
+
+    {% for section in site.data.toc.horizontalnav %}
+    if (currentSection=="{{ section.node }}")
+    {
+      $("#{{ section.node }}").addClass("active");
+    } else {
+      $("#{{ section.node }}").removeClass("active");
+    }
+    {% endfor %}
+
+    // Populate right-hand menu
+    var titleSkipped = false;
     $("#TableOfContents ul").empty();
 
     var prevH2Item = null;
@@ -208,6 +231,10 @@ jQuery(document).ready(function(){
     var currentHeader = 0, lastHeader = 0;
     var output = "<ul>";
     $("h1, h2, h3, h4").each(function() {
+      if (titleSkipped==false)
+      {
+        titleSkipped=true;
+      } else {
         var li= "<li><a href='" + window.location + "#" + $(this).attr('id') + "'>" + $(this).text().replace("¶","") + "</a></li>";
         if( $(this).is("h2") ){
           // h2
@@ -244,6 +271,7 @@ jQuery(document).ready(function(){
             prevH2List.append(li);
         }
         index++;*/
+      }
     });
     output += "</ul>";
     $("#TableOfContents").html(output);

@@ -3,6 +3,7 @@ description: Home page for Docker's documentation
 keywords: Docker, documentation, manual, guide, reference, api
 layout: docs
 title: Docker Documentation
+skip-right-nav: true
 ---
 
 Docker packages your app with its dependencies, freeing you from worrying about your
