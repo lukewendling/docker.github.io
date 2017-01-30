@@ -8,6 +8,14 @@ Compose supports declaring default environment variables in an environment
 file named `.env` placed in the folder `docker-compose` command is executed from
 *(current working directory)*.
 
+To create env variables from the .env file inside a container, use the `environment`
+option for Compose, like
+
+```
+environment:
+   - PORT
+```
+
 Compose expects each line in an env file to be in `VAR=VAL` format. Lines
 beginning with `#` (i.e. comments) are ignored, as are blank lines.
 
